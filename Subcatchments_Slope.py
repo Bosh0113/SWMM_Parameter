@@ -33,10 +33,10 @@ try:
     # Execute ZonalStatisticsAsTable
     outSMean = ZonalStatisticsAsTable(outShpTempPath, zoneField, outSlope, outTablePath, "NODATA", "MEAN")
     # Execute AddField
-    arcpy.AddField_management(inShpPath, "Slope", "DOUBLE", "", "", "", "slope", "NULLABLE", "NON_REQUIRED", "")
+    arcpy.AddField_management(outShpTempPath, "Slope", "DOUBLE", "", "", "", "slope", "NULLABLE", "NON_REQUIRED", "")
     # Create a feature layer
     layerName = "subcatchmentShp"
-    arcpy.MakeFeatureLayer_management(inShpPath, layerName)
+    arcpy.MakeFeatureLayer_management(outShpTempPath, layerName)
     # Join the feature layer to a table
     arcpy.AddJoin_management(layerName, indexField, outSMean, indexField)
     # Calculate Slope
