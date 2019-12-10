@@ -53,6 +53,7 @@ def getWeight(type, weights):
     arcpy.RemoveJoin_management(layerName, "impervTable")
     # Copy the layer to a new permanent feature class
     arcpy.CopyFeatures_management(layerName, outShpPath)
+
     print "success"
 except Exception as err:
     print err.args[0]
