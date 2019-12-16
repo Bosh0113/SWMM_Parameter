@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<ModelClass name="Subcatchments_Area" uid="95c8394b-aae4-4af9-a2fb-6035a8e9ed6b" type="SimpleCalculation">
+	  <AttributeSet>
+		<Categories>
+			<Category principle="Hydrosphere" path="Earth System Subject" />
+		</Categories>
+		<LocalAttributes>
+			  <LocalAttribute local="ZH_CN" localName="SWMM模型汇水区面积求算" wiki="">
+					<Keywords>SWMM模型;汇水区面积</Keywords>
+					<Abstract>SWMM模型汇水区面积求算</Abstract>
+			  </LocalAttribute>
+			  <LocalAttribute local="EN_US" localName="Calculation of catchment area of SWMM model" wiki="">
+					<Keywords>SWMM;Area</Keywords>
+					<Abstract>Calculation of catchment area of SWMM model</Abstract>
+			  </LocalAttribute>
+		</LocalAttributes>
+	  </AttributeSet>
+	  <Behavior>
+		<RelatedDatasets>
+			  <DatasetItem name="input" type="internal" description="input">
+					<UdxDeclaration>
+						<UdxNode />
+					</UdxDeclaration>
+			  </DatasetItem>
+			  <DatasetItem name="output" type="internal" description="output">
+					<UdxDeclaration>
+						<UdxNode />
+					</UdxDeclaration>
+			  </DatasetItem>
+		</RelatedDatasets>
+		<StateGroup>
+			  <States>
+					<State id="32018703-1741-4fba-9bc3-b4e593d1c96a" name="SubcatchmentsInput" type="basic" description="subcatchments of SWMM">
+						  <Event name="subcatchment_input" type="response" description="" optional="False">
+							<ResponseParameter datasetReference="input" description="Load" />
+						  </Event>
+					</State>
+					<State id="3982e43c-be5b-438c-ba63-58b99fe5029e" name="ResultOutput" type="basic" description="subcatchments with area">
+						  <Event name="subcatchment_output" type="noresponse" description="" optional="False">
+							<DispatchParameter datasetReference="output" description="Export" />
+						  </Event>
+					</State>
+			  </States>
+			  <StateTransitions />
+		</StateGroup>
+	  </Behavior>
+	  <Runtime name="Subcatchments_Area" version="1.0.0.0" baseDir="$(ModelServicePath)\Model" entry="Encapsulate.py">
+			<HardwareConfigures>
+				<Add key="cpu core numble" value="[2,infinite)" />
+	            <Add key="memory size" value="[2GB,infinite)" />
+			</HardwareConfigures>
+			<SoftwareConfigures>
+				<Add key="Operating System" platform="x64" value="win 6||win 7||win 8||win 8.1||win 10||win xp" />
+				<Add key="Python" platform="x64" value="3.7.0" />
+			</SoftwareConfigures>
+				<Assemblies />
+			<SupportiveResources />
+	  </Runtime>
+</ModelClass>
