@@ -6,7 +6,7 @@ from modeldatahandler import ModelDataHandler
 import xml.etree.ElementTree as ET
 from zip_utils import zip_dirs
 from zip_utils import unzip_dir
-import Subcatchments_Width
+import Subcatchments_Outlet
 import sys
 import os
 
@@ -22,10 +22,18 @@ mdh = ModelDataHandler(ms)
 instance_dir = ms.getModelInstanceDirectory()
 if not os.path.exists(instance_dir):
     os.makedirs(instance_dir)
+instance_event1 = instance_dir + "/event1_data"
+if not os.path.exists(instance_event1):
+    os.makedirs(instance_event1)
+instance_event2 = instance_dir + "/event2_data"
+if not os.path.exists(instance_event2):
+    os.makedirs(instance_event2)
 
 # parameters
 shp_file_path = ""
+outlet_file_path = ""
 indexField = ""
+joinField = ""
 
 # Enter State
 ms.onEnterState('SubcatchmentsInput')
@@ -41,12 +49,33 @@ if ms.getRequestDataFlag() == ERequestResponseDataFlag.ERDF_OK:
     if ms.getRequestDataMIME() == ERequestResponseDataMIME.ERDM_ZIP_FILE:
         # get input data
         data_subcatchment_input = ms.getRequestDataBody()
-        unzip_dir(data_subcatchment_input, instance_dir)
-        for root, dirs, files in os.walk(instance_dir):
+        unzip_dir(data_subcatchment_input, instance_event1)
+        for root, dirs, files in os.walk(instance_event1):
             for file in files:
                 filename = os.path.splitext(file)
                 if filename[len(filename) - 1] == '.shp':
                     shp_file_path = root + '\\' + file
+    else:
+        print("Input data failed!")
+        ms.onFinalize()
+else:
+    ms.onFinalize()# Event - input data
+ms.onFireEvent('outlet_input')
+
+ms.onRequestData()
+
+data_outlet_input = None
+if ms.getRequestDataFlag() == ERequestResponseDataFlag.ERDF_OK:
+    # input data is zip
+    if ms.getRequestDataMIME() == ERequestResponseDataMIME.ERDM_ZIP_FILE:
+        # get input data
+        data_outlet_input = ms.getRequestDataBody()
+        unzip_dir(data_outlet_input, instance_event2)
+        for root, dirs, files in os.walk(instance_event2):
+            for file in files:
+                filename = os.path.splitext(file)
+                if filename[len(filename) - 1] == '.shp':
+                    outlet_file_path = root + '\\' + file
     else:
         print("Input data failed!")
         ms.onFinalize()
@@ -67,6 +96,7 @@ if ms.getRequestDataFlag() == ERequestResponseDataFlag.ERDF_OK:
         rank_tree.parse(ms.getRequestDataBody())
         value_node_list = rank_tree.findall("XDO")
         indexField = value_node_list[0].attrib['value']
+        joinField = value_node_list[1].attrib['value']
     # input data is in other formats
     else:
         print("Input data failed!")
@@ -79,7 +109,7 @@ ms.onLeaveState()
 
 # Run model
 os.chdir(os.path.dirname(instance_dir))
-Subcatchments_Width.getWidth(shp_file_path, indexField)
+Subcatchments_Outlet.getOutlet(shp_file_path, outlet_file_path, indexField, joinField)
 
 # Enter State
 ms.onEnterState('ResultOutput')
@@ -92,7 +122,6 @@ if not os.path.exists(result_path):
     print("Model error!")
     ms.onFinalize()
 zip_dirs([result_path], result_zip_path)
-
 
 ms.setResponseDataFlag(ERequestResponseDataFlag.ERDF_OK)
 

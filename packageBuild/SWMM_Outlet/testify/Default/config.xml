@@ -1,0 +1,5 @@
+<DebugData Title="Default" tag="TestData">
+  <Item State="82654b15-0a20-4cc7-9dfe-6ba84ddf0232" Event="subcatchment_input" Type="File" File="subcatchments.zip" />
+  <Item State="82654b15-0a20-4cc7-9dfe-6ba84ddf0232" Event="outlet_input" Type="File" File="junctions.zip" />
+  <Item State="82654b15-0a20-4cc7-9dfe-6ba84ddf0232" Event="parameter_input" Type="File" File="parameter.xml" />
+</DebugData>

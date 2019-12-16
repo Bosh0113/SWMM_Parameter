@@ -1,0 +1,4 @@
+<Dataset>
+  <XDO name="indexField" kernelType="string" value="sOrder" />
+  <XDO name="joinField" kernelType="string" value="node" />
+</Dataset>
