@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata xml:lang="zh"><Esri><CreaDate>20191216</CreaDate><CreaTime>16584700</CreaTime><ArcGISFormat>1.0</ArcGISFormat><SyncOnce>TRUE</SyncOnce><DataProperties><lineage><Process ToolSource="c:\program files (x86)\arcgis\desktop10.5\ArcToolbox\Toolboxes\Spatial Analyst Tools.tbx\ZonalStatisticsAsTable" Date="20191216" Time="165847">ZonalStatisticsAsTable ./Process/subcaTemp.shp sOrder ./Process/landUseRaster .\Process\impervTable.dbf NODATA MEAN</Process></lineage></DataProperties></Esri></metadata>

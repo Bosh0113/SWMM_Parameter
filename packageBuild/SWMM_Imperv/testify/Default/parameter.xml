@@ -1,0 +1,7 @@
+<Dataset>
+  <XDO name="indexField" kernelType="string" value="sOrder" />
+  <XDO name="A" kernelType="float" value="0.9" />
+  <XDO name="B" kernelType="float" value="0.6" />
+  <XDO name="C" kernelType="float" value="0.4" />
+  <XDO name="D" kernelType="float" value="0.15" />
+</Dataset>

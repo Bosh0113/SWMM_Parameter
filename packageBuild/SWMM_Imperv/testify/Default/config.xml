@@ -1,0 +1,5 @@
+<DebugData Title="Default" tag="TestData">
+  <Item State="d21b0305-8274-49a6-9157-338eb5f01f24" Event="subcatchment_input" Type="File" File="subcatchments.zip" />
+  <Item State="d21b0305-8274-49a6-9157-338eb5f01f24" Event="landuse_input" Type="File" File="landUse.zip" />
+  <Item State="d21b0305-8274-49a6-9157-338eb5f01f24" Event="parameter_input" Type="File" File="parameter.xml" />
+</DebugData>

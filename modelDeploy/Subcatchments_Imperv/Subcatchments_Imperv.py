@@ -1,28 +1,24 @@
 import arcpy
 from arcpy.sa import *
 import json
+import os
 
-# Input Path
-inputPath = "D:/Temp/Test_ArcPy/Imperv/PreData/"
-# Process Path
-processPath = "D:/Temp/Test_ArcPy/Imperv/Process/"
-# Output Path
-outputPath = "D:/Temp/Test_ArcPy/Imperv/Result/"
-# Input Data Path
-inShpPath = inputPath + "subcatchments.shp"
-inlandUsePath = inputPath + "landUse.shp"
-# Index Field
-indexField = "sOrder"
-# Parameters Category + Runoff
-weights = {"A": 0.9, "B": 0.6, "C": 0.4, "D": 0.15}
-# Process Data Path
-outShpTempPath = processPath + "subcaTemp.shp"
-outLandTempPath = processPath + "landTemp.shp"
-outLandRasterPath = processPath + "landUseRaster"
-outTablePath = processPath + "impervTable.dbf"
-# Output Data Path
-outShpPath = outputPath + "subcatchments.shp"
-try:
+
+def getImperv(inShpPath, inlandUsePath, indexField, weights):
+    # Process Path
+    if not os.path.exists('Process'):
+        os.makedirs('Process')
+    processPath = "./Process/"
+    # Process Data Path
+    outShpTempPath = processPath + "subcaTemp.shp"
+    outLandTempPath = processPath + "landTemp.shp"
+    outLandRasterPath = processPath + "landUseRaster"
+    outTablePath = processPath + "impervTable.dbf"
+    # Output Path
+    if not os.path.exists('Result'):
+        os.makedirs('Result')
+    # Output Data Path
+    outShpPath = "./Result/subcatchments.shp"
     # Execute CopyFeatures
     arcpy.CopyFeatures_management(inShpPath, outShpTempPath)
     arcpy.CopyFeatures_management(inlandUsePath, outLandTempPath)
@@ -53,7 +49,9 @@ def getWeight(type, weights):
     arcpy.RemoveJoin_management(layerName, "impervTable")
     # Copy the layer to a new permanent feature class
     arcpy.CopyFeatures_management(layerName, outShpPath)
+    return outShpPath
 
-    print "success"
-except Exception as err:
-    print err.args[0]
+
+if __name__ == '__main__':
+    weights = {"A": 0.9, "B": 0.6, "C": 0.4, "D": 0.15}
+    getImperv("./Data/subcatchments.shp", "./Data/landUse.shp", "sOrder", weights)
