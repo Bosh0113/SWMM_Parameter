@@ -1,24 +1,22 @@
 import arcpy
 from arcpy.sa import *
+import os
 
-# Input Path
-inputPath = "D:/Temp/Test_ArcPy/Slope/PreData/"
-# Process Path
-processPath = "D:/Temp/Test_ArcPy/Slope/Process/"
-# Output Path
-outputPath = "D:/Temp/Test_ArcPy/Slope/Result/"
-# Input Data Path
-inShpPath = inputPath + "subcatchments.shp"
-inDEMPath = inputPath + "resareadem"
-# Index Field
-indexField = "sOrder"
-# Process Data Path
-outShpTempPath = processPath + "temp.shp"
-outSlopePath = processPath + "slope"
-outTablePath = processPath + "slopeMean.dbf"
-# Output Data Path
-outShpPath = outputPath + "subcatchments.shp"
-try:
+
+def getSlope(inShpPath, inDEMPath, indexField):
+    # Process Path
+    if not os.path.exists('Process'):
+        os.makedirs('Process')
+    processPath = "./Process/"
+    # Process Data Path
+    outShpTempPath = processPath + "temp.shp"
+    outSlopePath = processPath + "slope"
+    outTablePath = processPath + "slopeMean.dbf"
+    # Output Path
+    if not os.path.exists('Result'):
+        os.makedirs('Result')
+    # Output Data Path
+    outShpPath = "./Result/subcatchments.shp"
     # Execute CopyFeatures
     arcpy.CopyFeatures_management(inShpPath, outShpTempPath)
     # Check out the ArcGIS Spatial Analyst extension license
@@ -45,7 +43,8 @@ try:
     arcpy.RemoveJoin_management(layerName, "slopeMean")
     # Copy the layer to a new permanent feature class
     arcpy.CopyFeatures_management(layerName, outShpPath)
+    return outShpPath
 
-    print "success"
-except Exception as err:
-    print err.args[0]
+
+if __name__ == '__main__':
+    getSlope("./Data/subcatchments.shp", "./Data/resareadem", "sOrder")
