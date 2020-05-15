@@ -24,6 +24,7 @@ def getImperv(inShpPath, inlandUsePath, indexField, weights):
     arcpy.CopyFeatures_management(inlandUsePath, outLandTempPath)
     # Check out the ArcGIS Spatial Analyst extension license
     arcpy.CheckExtension("Spatial")
+    arcpy.CheckOutExtension("Spatial")
     # Execute AddField
     arcpy.AddField_management(outLandTempPath, "Weight", "DOUBLE", "", "", "", "weight", "NULLABLE", "NON_REQUIRED", "")
     # Calculate Weight

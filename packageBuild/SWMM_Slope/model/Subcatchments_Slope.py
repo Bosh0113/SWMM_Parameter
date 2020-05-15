@@ -22,6 +22,7 @@ def getSlope(inShpPath, inDEMPath, indexField):
     arcpy.CopyFeatures_management(inShpPath, outShpTempPath)
     # Check out the ArcGIS Spatial Analyst extension license
     arcpy.CheckExtension("Spatial")
+    arcpy.CheckOutExtension("Spatial")
     # Fill
     fillDEM = Fill(inDEMPath)
     # Slope
